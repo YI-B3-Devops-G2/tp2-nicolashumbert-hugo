@@ -1,0 +1,42 @@
+version: '3.1'
+
+services:
+    nodejs:
+      build:
+        context: ../
+        dockerfile: Docker/nodejs/Dockerfile
+      container_name: devops_api_nodejs
+      environment:
+        - NODE_ENV=production
+        - PORT=8080
+        - DB_USER=admin
+        - DB_PASSWORD=azerty@123
+        - DB_NAME=test
+        - DB_HOST=devops_postgres
+      ports:
+        - 8080:3000
+      depends_on:
+        - postgres
+      networks:
+        - sub_network_db
+        - sub_network_node
+    postgres:
+      image: postgres
+      container_name: devops_postgres
+      environment:
+        POSTGRES_DB: test
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: azerty@123
+        PGDATA: /data/postgres
+      restart: unless-stopped
+      networks:
+        - sub_network_db
+    redis:
+      image: redis
+      container_name: devops_redis
+      networks:
+        - sub_network_db
+  
+networks:
+    sub_network_db:
+    sub_network_node:
