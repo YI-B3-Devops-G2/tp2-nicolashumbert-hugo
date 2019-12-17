@@ -36,6 +36,16 @@ services:
       container_name: devops_redis
       networks:
         - sub_network_db
+    nginx:
+      build:
+        context: ./nginx
+        dockerfile: Dockerfile
+      environment:
+        - HOSTNAME=devops_tp_nodejs:8080
+      networks:
+        - sub_network_node
+      ports:
+        - 8080:80
   
 networks:
     sub_network_db:
