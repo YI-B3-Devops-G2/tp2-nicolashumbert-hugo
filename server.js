@@ -17,11 +17,11 @@ const redisClient = redis.createClient({ host: 'devops_redis' });
 app.use(express.json());
 
 
-app.get('/', function(req, res) {
+app.get('/api', function(req, res) {
     res.json({ message: 'Hello World'});
 });
 
-app.get('/status', async function(req, res) {
+app.get('/api/status', async function(req, res) {
     const uptimePG = await client.query("SELECT date_trunc('second', current_timestamp - pg_postmaster_start_time()) as uptime;");
     
     const uptime = uptimePG.rows[0].uptime

@@ -8,13 +8,13 @@ services:
       container_name: devops_api_nodejs
       environment:
         - NODE_ENV=production
-        - PORT=8080
+        - PORT=36301
         - DB_USER=admin
         - DB_PASSWORD=azerty@123
         - DB_NAME=test
         - DB_HOST=devops_postgres
       ports:
-        - 8080:3000
+        - 36301:3000
       depends_on:
         - postgres
       networks:
@@ -41,11 +41,11 @@ services:
         context: ./nginx
         dockerfile: Dockerfile
       environment:
-        - HOSTNAME=devops_tp_nodejs:8080
+        - HOSTNAME=devops_tp_nodejs:36301
       networks:
         - sub_network_node
       ports:
-        - 8080:80
+        - 36301:80
   
 networks:
     sub_network_db:
