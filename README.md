@@ -23,3 +23,12 @@ Executer la commande dans le dossier du projet
 docker-compose up --build
 ```
 
+## Display results
+Show API:
+```
+localhost:36301/api
+```
+Show status:
+```
+localhost:36301/api/status
+```
