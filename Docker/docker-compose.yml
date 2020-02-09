@@ -13,13 +13,8 @@ services:
         - DB_PASSWORD=azerty@123
         - DB_NAME=test
         - DB_HOST=devops_postgres
-      ports:
-        - 36301:3000
       depends_on:
         - postgres
-      networks:
-        - sub_network_db
-        - sub_network_node
     postgres:
       image: postgres
       container_name: devops_postgres
@@ -29,24 +24,16 @@ services:
         POSTGRES_PASSWORD: azerty@123
         PGDATA: /data/postgres
       restart: unless-stopped
-      networks:
-        - sub_network_db
     redis:
       image: redis
       container_name: devops_redis
-      networks:
-        - sub_network_db
     nginx:
       build:
         context: ./nginx
         dockerfile: Dockerfile
       environment:
         - HOSTNAME=devops_tp_nodejs:36301
-      networks:
-        - sub_network_node
+      depends_on:
+        - nodejs
       ports:
-        - 36301:80
-  
-networks:
-    sub_network_db:
-    sub_network_node:
+        - 3000:3000
